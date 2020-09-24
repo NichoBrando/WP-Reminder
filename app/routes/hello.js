@@ -1,12 +1,14 @@
-"use strict";
-
+("use strict");
+const { authHeaders } = require("../services/authHeader");
 const helloController = require("../controllers/hello");
 
 module.exports = [
   {
     method: "GET",
     path: "/",
-    config: {},
+    config: {
+      auth: false,
+    },
     handler: helloController.hello,
   },
 ];

@@ -1,8 +1,9 @@
-"use strict";
-
 const Hapi = require("@hapi/hapi");
+//const Glue = require("@hapi/glue");
 const fs = require("fs");
-
+/*const jwt = require("hapi-auth-jwt2");
+const { ALGORITHM } = require("./auth/conf");
+*/
 let routes = [];
 
 fs.readdirSync(__dirname + "/routes").forEach((file) => {
@@ -10,7 +11,7 @@ fs.readdirSync(__dirname + "/routes").forEach((file) => {
 });
 
 const init = async () => {
-  const server = Hapi.server({
+  const server = Hapi.Server({
     port: 3000,
     host: "localhost",
   });
@@ -19,13 +20,21 @@ const init = async () => {
     server.route(route);
   });
 
+  /*
+  await server.register(jwt);
+  server.auth.strategy("jwt", "jwt", {
+    key: process.env.SECRET_KEY,
+    validate: function () {
+      return { isValid: true };
+    },
+    verifyOptions: {
+      algorithms: [ALGORITHM],
+    },
+  });
+  server.auth.default("jwt");
+  */
   await server.start();
   console.log("Server running on %s", server.info.uri);
 };
-
-process.on("unhandledRejection", (err) => {
-  console.log(err);
-  process.exit(1);
-});
 
 init();
