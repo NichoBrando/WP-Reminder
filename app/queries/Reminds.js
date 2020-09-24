@@ -1,7 +1,11 @@
+const mongoose = require("mongoose");
 const remindsModel = require("../models/Reminds");
 
 const get = async (id) => {
-  const reminds = await remindsModel.findById(id);
+  const match = {
+    user: { $eq: mongoose.Types.ObjectId(id) },
+  };
+  const reminds = remindsModel.aggregate({ $match: match });
   if (!reminds) return [];
   return reminds;
 };

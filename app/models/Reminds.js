@@ -5,4 +5,4 @@ const RemindSchema = new mongoose.Schema({
   content: { type: String, required: true },
 });
 
-module.exports = mongoose.model("User", RemindSchema);
+module.exports = mongoose.model("Remind", RemindSchema);

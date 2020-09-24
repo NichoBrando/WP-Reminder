@@ -5,21 +5,6 @@ const Joi = require("@hapi/joi");
 
 module.exports = [
   {
-    method: "GET",
-    path: "/user/{id}",
-    config: {
-      auth: false,
-      cors: false,
-      /*validate: {
-        payload: Joi.object({
-          username: Joi.string(),
-          password: Joi.string(),
-        }),
-      },*/
-    },
-    handler: userController.hello,
-  },
-  {
     method: "POST",
     path: "/user/register",
     config: {
