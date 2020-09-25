@@ -26,8 +26,9 @@ const update = async (request) => {
 
 const remove = async (request) => {
   const payload = request.payload;
-  const user = await userQuery.update({
+  const user = await userQuery.remove({
     id: payload.id,
+    email: payload.email,
     password: payload.password,
   });
   return user;

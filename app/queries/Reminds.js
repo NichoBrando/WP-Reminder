@@ -2,10 +2,7 @@ const mongoose = require("mongoose");
 const remindsModel = require("../models/Reminds");
 
 const get = async (id) => {
-  const match = {
-    user: { $eq: mongoose.Types.ObjectId(id) },
-  };
-  const reminds = remindsModel.aggregate({ $match: match });
+  const reminds = remindsModel.find({ user_id: id });
   if (!reminds) return [];
   return reminds;
 };
@@ -17,8 +14,9 @@ const create = async (payload) => {
 };
 
 const update = async (payload) => {
-  const remind = await remindsModel.findById(payload.id);
-  if (remind.user_id !== payload.userId) return {};
+  const remind = await remindsModel.findById(payload.id).exec();
+  if (!remind) return {};
+  if (remind.user_id != payload.user_id) return {};
   remind.content = payload.content;
   remind.save();
   return remind;
@@ -26,7 +24,9 @@ const update = async (payload) => {
 
 const remove = async (payload) => {
   const remind = remindsModel.findById(payload.id);
-  if (remind.user_id !== payload.userId) return {};
+  if (!remind) return {};
+  if (remind.user_id != payload.user_id) return {};
+  if (remind.password != payload.password) return {};
   await remind.deleteOne();
   return remind;
 };
