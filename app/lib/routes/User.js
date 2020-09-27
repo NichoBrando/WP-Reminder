@@ -1,5 +1,5 @@
 ("use strict");
-const { authHeaders } = require("../services/authHeader");
+const { authHeaders } = require("../../services/authHeader");
 const userController = require("../controllers/User");
 const Joi = require("@hapi/joi");
 
@@ -10,12 +10,12 @@ module.exports = [
     config: {
       auth: false,
       cors: false,
-      /*validate: {
+      validate: {
         payload: Joi.object({
           username: Joi.string(),
           password: Joi.string(),
         }),
-      },*/
+      },
     },
     handler: userController.register,
   },

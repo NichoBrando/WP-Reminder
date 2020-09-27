@@ -1,5 +1,5 @@
 ("use strict");
-const { authHeaders } = require("../services/authHeader");
+const { authHeaders } = require("../../services/authHeader");
 const remindsController = require("../controllers/Reminds");
 const Joi = require("@hapi/joi");
 

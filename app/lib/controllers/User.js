@@ -1,8 +1,6 @@
-const userQuery = require("../queries/User");
+const userQuery = require("../../queries/User");
 
-const login = async (request) => {
-  return {};
-};
+const login = async (request) => {};
 
 const register = async (request) => {
   const payload = request.payload;

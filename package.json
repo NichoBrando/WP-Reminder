@@ -8,6 +8,10 @@
     "@hapi/hapi": "^20.0.1",
     "@hapi/joi": "^17.1.1",
     "hapi-auth-jwt2": "^10.2.0",
+    "haute-couture": "^3.6.0",
     "mongoose": "^5.10.6"
+  },
+  "scripts": {
+    "start": "nodemon app/server/index.js"
   }
 }

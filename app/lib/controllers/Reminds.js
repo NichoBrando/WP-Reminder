@@ -1,4 +1,4 @@
-const remindsQuery = require("../queries/Reminds");
+const remindsQuery = require("../../queries/Reminds");
 
 const get = async (request) => {
   const id = request.params.id;
