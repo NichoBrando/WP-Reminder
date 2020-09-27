@@ -24,12 +24,12 @@ module.exports = [
     config: {
       auth: false,
       cors: false,
-      /*validate: {
+      validate: {
         payload: Joi.object({
           userId: Joi.string(),
           content: Joi.string(),
         }),
-      },*/
+      },
     },
     handler: remindsController.create,
   },
@@ -39,12 +39,12 @@ module.exports = [
     config: {
       auth: false,
       cors: false,
-      /*validate: {
+      validate: {
         payload: Joi.object({
           userId: Joi.string(),
           content: Joi.string(),
         }),
-      },*/
+      },
     },
     handler: remindsController.update,
   },
@@ -54,12 +54,12 @@ module.exports = [
     config: {
       auth: false,
       cors: false,
-      /*validate: {
+      validate: {
         payload: Joi.object({
           userId: Joi.string(),
           contentId: Joi.string(),
         }),
-      },*/
+      },
     },
     handler: remindsController.remove,
   },

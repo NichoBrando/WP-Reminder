@@ -25,12 +25,12 @@ module.exports = [
     config: {
       auth: false,
       cors: false,
-      /*validate: {
+      validate: {
         payload: Joi.object({
           username: Joi.string(),
           password: Joi.string(),
         }),
-      },*/
+      },
     },
     handler: userController.login,
   },
@@ -40,12 +40,12 @@ module.exports = [
     config: {
       auth: false,
       cors: false,
-      /*validate: {
+      validate: {
         payload: Joi.object({
           id: Joi.string(),
           password: Joi.string(),
         }),
-      },*/
+      },
     },
     handler: userController.update,
   },
@@ -55,11 +55,11 @@ module.exports = [
     config: {
       cors: false,
       auth: false,
-      /*validate: {
+      validate: {
         payload: Joi.object({
           id: Joi.string(),
         }),
-      },*/
+      },
     },
     handler: userController.remove,
   },
