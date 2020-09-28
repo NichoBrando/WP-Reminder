@@ -26,8 +26,9 @@ module.exports = [
       cors: false,
       validate: {
         payload: Joi.object({
-          userId: Joi.string(),
+          user_id: Joi.string(),
           content: Joi.string(),
+          date: Joi.string(),
         }),
       },
     },
@@ -41,7 +42,7 @@ module.exports = [
       cors: false,
       validate: {
         payload: Joi.object({
-          userId: Joi.string(),
+          user_id: Joi.string(),
           content: Joi.string(),
         }),
       },
@@ -56,8 +57,8 @@ module.exports = [
       cors: false,
       validate: {
         payload: Joi.object({
-          userId: Joi.string(),
-          contentId: Joi.string(),
+          user_id: Joi.string(),
+          id: Joi.string(),
         }),
       },
     },

@@ -27,7 +27,6 @@ const remove = async (request) => {
   const deleted = await remindsQuery.remove({
     id: payload.id,
     user_id: payload.user_id,
-    password: payload.password,
   });
   return deleted;
 };

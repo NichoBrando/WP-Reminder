@@ -14,6 +14,7 @@ module.exports = [
         payload: Joi.object({
           username: Joi.string(),
           password: Joi.string(),
+          email: Joi.string(),
         }),
       },
     },

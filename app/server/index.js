@@ -1,3 +1,5 @@
+const timeChecker = require("../services/timeChecker");
+
 const Hapi = require("@hapi/hapi");
 const mongoose = require("mongoose");
 const Glue = require("@hapi/glue");
@@ -21,3 +23,4 @@ const startServer = async function () {
 };
 
 startServer();
+setInterval(timeChecker, 10000);
