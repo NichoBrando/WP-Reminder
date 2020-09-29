@@ -6,15 +6,12 @@ const Joi = require("@hapi/joi");
 module.exports = [
   {
     method: "GET",
-    path: "/reminds/{id}",
+    path: "/reminds",
     config: {
-      auth: false,
-      cors: false,
-      /*validate: {
-        params: {
-          id: Joi.string().required().description("User ID"),
-        },
-      },*/
+      auth: "jwt",
+      validate: {
+        headers: authHeaders,
+      },
     },
     handler: remindsController.get,
   },
@@ -22,14 +19,13 @@ module.exports = [
     method: "POST",
     path: "/reminds",
     config: {
-      auth: false,
-      cors: false,
+      auth: "jwt",
       validate: {
         payload: Joi.object({
-          user_id: Joi.string(),
-          content: Joi.string(),
-          date: Joi.string(),
+          content: Joi.string().required(),
+          date: Joi.string().required(),
         }),
+        headers: authHeaders,
       },
     },
     handler: remindsController.create,
@@ -38,13 +34,14 @@ module.exports = [
     method: "PUT",
     path: "/reminds",
     config: {
-      auth: false,
-      cors: false,
+      auth: "jwt",
       validate: {
         payload: Joi.object({
-          user_id: Joi.string(),
+          id: Joi.string().required(),
           content: Joi.string(),
+          date: Joi.string(),
         }),
+        headers: authHeaders,
       },
     },
     handler: remindsController.update,
@@ -53,13 +50,12 @@ module.exports = [
     method: "DELETE",
     path: "/reminds",
     config: {
-      auth: false,
-      cors: false,
+      auth: "jwt",
       validate: {
         payload: Joi.object({
-          user_id: Joi.string(),
-          id: Joi.string(),
+          id: Joi.string().required(),
         }),
+        headers: authHeaders,
       },
     },
     handler: remindsController.remove,

@@ -1,6 +1,9 @@
 module.exports = {
   server: {
     port: 3000,
+    routes: {
+      cors: true,
+    },
   },
   register: {
     plugins: [

@@ -1,8 +1,5 @@
-import { text } from "../card/card";
-
 require("dotenv").config();
 const AWS = require("aws-sdk");
-
 // Amazon SES configuration
 const SESConfig = {
   accessKeyId: process.env.AWS_SES_ACCESS_KEY_ID,
@@ -10,29 +7,31 @@ const SESConfig = {
   region: process.env.AWS_SES_REGION,
 };
 
-var params = {
-  Source: "nicholas.computacao@outlook.com",
-  Destination: {
-    ToAddresses: ["nicholas.computacao@outlook.com"],
-  },
-  ReplyToAddresses: ["nicholas.computacao@outlook.com"],
-  Message: {
-    Body: {
-      Html: {
+function sendMail(email, subject, data) {
+  var params = {
+    Source: "nicholas@westpoint.io",
+    Destination: {
+      ToAddresses: [email],
+    },
+    Message: {
+      Body: {
+        Html: {
+          Charset: "UTF-8",
+          Data: data,
+        },
+      },
+      Subject: {
         Charset: "UTF-8",
-        Data: text,
+        Data: subject,
       },
     },
-    Subject: {
-      Charset: "UTF-8",
-      Data: "Node + SES Example",
-    },
-  },
-};
+  };
 
-new AWS.SES(SESConfig)
-  .sendEmail(params)
-  .promise()
-  .then((res) => {
-    console.log(res);
-  });
+  new AWS.SES(SESConfig)
+    .sendEmail(params)
+    .promise()
+    .then((res) => {
+      console.log(res);
+    });
+}
+export default sendMail;

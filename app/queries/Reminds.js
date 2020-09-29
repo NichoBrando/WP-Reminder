@@ -22,7 +22,8 @@ const update = async (payload) => {
   const remind = await remindsModel.findById(payload.id).exec();
   if (!remind) return {};
   if (remind.user_id != payload.user_id) return {};
-  remind.content = payload.content;
+  if (payload.content) remind.content = payload.content;
+  if (payload.date) remind.when = new Date(payload.date);
   remind.save();
   return remind;
 };
@@ -36,16 +37,31 @@ const remove = async (payload) => {
 };
 
 const getByTime = async () => {
-  const reminds = await remindsModel.find({});
-  console.log(reminds);
-  if (!reminds) return [];
-  const date = new Date();
-  const today = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
-  const filteredReminds = reminds.filter((element) => {
-    const elementDate = `${element.when.getDate()}/${element.when.getMonth()}/${element.when.getFullYear()} ${element.when.getHours()}:${element.when.getMinutes()}`;
-    return today === elementDate;
-  });
-  return filteredReminds;
+  console.log(new Date(Date.now()));
+  const match = {
+    when: new Date(Date.now()),
+  };
+  const lookup = {
+    $lookup: {
+      from: "User",
+      localField: "user_id",
+      foreignField: "_id",
+      as: "user",
+    },
+  };
+  const reminders = await remindsModel.aggregate([
+    { $match: match },
+    lookup,
+    {
+      $project: {
+        email: "$user.email",
+        day: "$when",
+        content: "$content",
+      },
+    },
+  ]);
+  console.log(reminders);
+  return reminders;
 };
 
 module.exports = {

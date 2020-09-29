@@ -9,12 +9,11 @@ module.exports = [
     path: "/user/register",
     config: {
       auth: false,
-      cors: false,
       validate: {
         payload: Joi.object({
-          username: Joi.string(),
-          password: Joi.string(),
-          email: Joi.string(),
+          username: Joi.string().required(),
+          password: Joi.string().required(),
+          email: Joi.string().required(),
         }),
       },
     },
@@ -25,11 +24,10 @@ module.exports = [
     path: "/user/login",
     config: {
       auth: false,
-      cors: false,
       validate: {
         payload: Joi.object({
-          username: Joi.string(),
-          password: Joi.string(),
+          username: Joi.string().required(),
+          password: Joi.string().required(),
         }),
       },
     },
@@ -39,13 +37,13 @@ module.exports = [
     method: "PUT",
     path: "/user",
     config: {
-      auth: false,
-      cors: false,
+      auth: "jwt",
       validate: {
         payload: Joi.object({
           id: Joi.string(),
           password: Joi.string(),
         }),
+        headers: authHeaders,
       },
     },
     handler: userController.update,
@@ -55,11 +53,12 @@ module.exports = [
     path: "/user",
     config: {
       cors: false,
-      auth: false,
+      auth: "jwt",
       validate: {
         payload: Joi.object({
           id: Joi.string(),
         }),
+        headers: authHeaders,
       },
     },
     handler: userController.remove,

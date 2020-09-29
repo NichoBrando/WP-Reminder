@@ -1,32 +1,33 @@
 const remindsQuery = require("../../queries/Reminds");
 
 const get = async (request) => {
-  const id = request.params.id;
-  const reminds = await remindsQuery.get(id);
+  const reminds = await remindsQuery.get(request.auth.credentials.id);
   return reminds;
 };
 
 const create = async (request) => {
   const payload = request.payload;
-  const remind = await remindsQuery.create(payload);
+  const remind = await remindsQuery.create({
+    ...payload,
+    user_id: request.auth.credentials.id,
+  });
   return remind;
 };
 
 const update = async (request) => {
   const payload = request.payload;
   const remind = await remindsQuery.update({
-    id: payload.id,
-    user_id: payload.user_id,
-    content: payload.content,
+    ...payload,
+    user_id: request.auth.credentials.id,
   });
   return remind;
 };
 
 const remove = async (request) => {
-  const payload = request.payload;
+  const id = request.payload.id;
   const deleted = await remindsQuery.remove({
-    id: payload.id,
-    user_id: payload.user_id,
+    id: id,
+    user_id: request.auth.credentials.id,
   });
   return deleted;
 };

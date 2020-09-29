@@ -1,11 +1,9 @@
-const timeChecker = require("../services/timeChecker");
+const startTimeChecker = require("../services/timeChecker");
 
 const Hapi = require("@hapi/hapi");
 const mongoose = require("mongoose");
 const Glue = require("@hapi/glue");
-/*const jwt = require("hapi-auth-jwt2");
-const { ALGORITHM } = require("./auth/conf");
-*/
+
 const manifest = require("./manifest");
 mongoose.connect("mongodb://localhost:27017/reminder", {
   useNewUrlParser: true,
@@ -18,9 +16,12 @@ const options = {
 
 const startServer = async function () {
   const server = await Glue.compose(manifest, options);
+  await server.initialize();
   await server.start();
-  console.log("hapi days!");
+  console.log("Listening on port 3000!");
 };
 
 startServer();
-setInterval(timeChecker, 10000);
+startTimeChecker();
+//Nodecron
+//60000 milisecs
