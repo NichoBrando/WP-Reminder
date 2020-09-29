@@ -17,14 +17,16 @@ const register = async (credentials) => {
 
 const update = async (credentials) => {
   const user = await userModel.findById(credentials.id);
-  if (credentials.password !== user.password) return [];
+  if (!user) return {};
+  if (credentials.password) user.password = credentials.password;
+  if (credentials.email) user.email = credentials.email;
   user.save();
   return user;
 };
 
 const remove = async (credentials) => {
   const user = await userModel.findById(credentials.id);
-  if (credentials.password !== user.password) return [];
+  if (!user) return {};
   user.deleteOne();
   return user;
 };

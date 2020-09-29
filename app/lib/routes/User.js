@@ -40,7 +40,7 @@ module.exports = [
       auth: "jwt",
       validate: {
         payload: Joi.object({
-          id: Joi.string(),
+          email: Joi.string(),
           password: Joi.string(),
         }),
         headers: authHeaders,
@@ -52,12 +52,8 @@ module.exports = [
     method: "DELETE",
     path: "/user",
     config: {
-      cors: false,
       auth: "jwt",
       validate: {
-        payload: Joi.object({
-          id: Joi.string(),
-        }),
         headers: authHeaders,
       },
     },

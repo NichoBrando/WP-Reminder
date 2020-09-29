@@ -58,22 +58,31 @@ const register = async (request) => {
 
 const update = async (request) => {
   const payload = request.payload;
+  if (payload.password)
+    payload.password = Bcrypt.hashSync(payload.password, 10);
   const user = await userQuery.update({
-    id: payload.id,
+    id: request.auth.credentials.id,
     password: payload.password,
     email: payload.email,
   });
-  return user;
+  return {
+    user: {
+      ...fromMongoose(user),
+      password: undefined,
+    },
+  };
 };
 
 const remove = async (request) => {
-  const payload = request.payload;
   const user = await userQuery.remove({
-    id: payload.id,
-    email: payload.email,
-    password: payload.password,
+    id: request.auth.credentials.id,
   });
-  return user;
+  return {
+    user: {
+      ...fromMongoose(user),
+      password: undefined,
+    },
+  };
 };
 
 module.exports = {
