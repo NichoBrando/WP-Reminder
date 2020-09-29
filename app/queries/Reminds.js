@@ -1,4 +1,3 @@
-const mongoose = require("mongoose");
 const remindsModel = require("../models/Reminds");
 
 const get = async (id) => {
@@ -9,11 +8,14 @@ const get = async (id) => {
 
 const create = async (payload) => {
   const date = new Date(payload.date);
+  date.setSeconds(0, 0);
+  console.log(date.toISOString());
   const remind = await remindsModel({
     user_id: payload.user_id,
     content: payload.content,
-    when: date,
+    when: date.toISOString(),
   });
+  console.log(remind.when);
   remind.save();
   return remind;
 };
@@ -37,13 +39,15 @@ const remove = async (payload) => {
 };
 
 const getByTime = async () => {
-  console.log(new Date(Date.now()));
+  const temp = new Date(Date.now());
+  temp.setSeconds(0, 0);
+  console.log(temp.toISOString());
   const match = {
-    when: new Date(Date.now()),
+    when: temp.toISOString(),
   };
   const lookup = {
     $lookup: {
-      from: "User",
+      from: "users",
       localField: "user_id",
       foreignField: "_id",
       as: "user",
@@ -54,7 +58,8 @@ const getByTime = async () => {
     lookup,
     {
       $project: {
-        email: "$user.email",
+        email: { $arrayElemAt: ["$user.email", 0] },
+        username: { $arrayElemAt: ["$user.username", 0] },
         day: "$when",
         content: "$content",
       },

@@ -1,10 +1,15 @@
+const sendMail = require("./emailSender");
 const cron = require("node-cron");
 const remindsQuery = require("../queries/Reminds");
 
 async function timeChecker() {
   const reminders = await remindsQuery.getByTime();
-  if (reminders.length > 0) reminders.map((element) => 1);
-  else console.log("Don't have any reminders to show");
+  reminders.map((element) => {
+    const email = element.email;
+    const username = element.username;
+    const content = element.content;
+    sendMail(email, content, element.date, username);
+  });
 }
 
 function startTimeChecker() {

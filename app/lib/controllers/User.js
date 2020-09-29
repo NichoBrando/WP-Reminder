@@ -1,7 +1,6 @@
 const User = require("../../models/User");
 const userQuery = require("../../queries/User");
 const { fromMongoose } = require("../../services/entityConverter");
-const { toResponse } = require("../../services/controllersUtil");
 const Config = require("../../config");
 const Boom = require("boom");
 const Bcrypt = require("bcrypt");

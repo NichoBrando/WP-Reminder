@@ -1,15 +1,18 @@
-require("dotenv").config();
+const createCard = require("../card/card");
+
 const AWS = require("aws-sdk");
 // Amazon SES configuration
 const SESConfig = {
-  accessKeyId: process.env.AWS_SES_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SES_SECRET_ACCESS_KEY,
-  region: process.env.AWS_SES_REGION,
+  accessKeyId: "", //accessKeyId,
+  secretAccessKey: "", //AWS-Secret-Key,
+  region: "", //AWS-Region,
 };
 
-function sendMail(email, subject, data) {
+function sendMail(email, content, date, username) {
+  console.log(date);
+  const cardDate = new Date(date);
   var params = {
-    Source: "nicholas@westpoint.io",
+    Source: "",
     Destination: {
       ToAddresses: [email],
     },
@@ -17,12 +20,12 @@ function sendMail(email, subject, data) {
       Body: {
         Html: {
           Charset: "UTF-8",
-          Data: data,
+          Data: createCard(content, cardDate.getDay(), cardDate.getHours()),
         },
       },
       Subject: {
         Charset: "UTF-8",
-        Data: subject,
+        Data: `Remind to ${username}`,
       },
     },
   };
@@ -34,4 +37,5 @@ function sendMail(email, subject, data) {
       console.log(res);
     });
 }
-export default sendMail;
+
+module.exports = sendMail;

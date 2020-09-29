@@ -23,5 +23,3 @@ const startServer = async function () {
 
 startServer();
 startTimeChecker();
-//Nodecron
-//60000 milisecs
